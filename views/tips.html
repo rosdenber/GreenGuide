@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Friendly Tips - GreenGuide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f8f0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #2e7d32;
+            color: white;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 2.5rem;
+        }
+
+        nav {
+            background-color: #388e3c;
+            padding: 0.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0.5rem 1rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #e8f5e9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2e7d32;
+        }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: #8bc34a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: #2e7d32;
+        }
+
+        .tips-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .tip-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .tip-header {
+            background-color: #2e7d32;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .tip-header i {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-header h3 {
+            font-size: 1.5rem;
+        }
+
+        .tip-content {
+            padding: 1.5rem;
+        }
+
+        .tip-content p {
+            margin-bottom: 1rem;
+        }
+
+        .tip-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .tip-meta {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1.5rem 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .daily-tip {
+            background: linear-gradient(135deg, #2e7d32, #8bc34a);
+            color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .daily-tip h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .daily-tip p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .daily-tip .tip-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background-color: #1b5e20;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.3rem 0;
+            }
+            
+            .tip-filter {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tips-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            <h1>GreenGuide</h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/guide"><i class="fas fa-book"></i> Guides</a></li>
+            <li><a href="/disposal"><i class="fas fa-trash-alt"></i> Disposal</a></li>
+            <li><a href="/tips"><i class="fas fa-lightbulb"></i> Tips</a></li>
+            <li><a href="/quiz"><i class="fas fa-question-circle"></i> Quiz</a></li>
+            <li><a href="#" id="classify-link"><i class="fas fa-camera"></i> Classify Trash</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h2>Eco-Friendly Tips</h2>
+            <p>Daily tips to help you reduce waste and live sustainably</p>
+        </div>
+
+        <div class="daily-tip">
+            <div class="tip-icon">
+                <i class="fas fa-seedling"></i>
+            </div>
+            <h3>Today's Eco Tip</h3>
+            <p>Start a compost bin for your kitchen scraps! It reduces landfill waste and creates nutrient-rich soil for your garden.</p>
+            <button class="filter-btn">Learn More</button>
+        </div>
+
+        <div class="tip-filter">
+            <button class="filter-btn active" data-category="all">All Tips</button>
+            <button class="filter-btn" data-category="reduce">Reduce</button>
+            <button class="filter-btn" data-category="reuse">Reuse</button>
+            <button class="filter-btn" data-category="recycle">Recycle</button>
+            <button class="filter-btn" data-category="compost">Compost</button>
+        </div>
+
+        <div class="tips-container">
+            <div class="tip-card" data-category="reduce">
+                <div class="tip-header">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h3>Reduce Plastic Use</h3>
+                </div>
+                <div class="tip-content">
+                    <p>Small changes in your shopping habits can significantly reduce plastic waste:</p>
+                    <ul>
+                        <li>Bring reusable bags when shopping</li>
+                        <li>Use refillable water bottles instead of buying plastic ones</li>
+                        <li>Choose products with minimal packaging</li>
+                        <li>Buy in bulk to reduce packaging waste</li>
+                    </ul>
+                    <p>These simple swaps can prevent hundreds of plastic items from entering landfills each year.</p>
+                </div>
+                <div class="tip-meta">
+                    <span><i class="fas fa-tag"></i> Reduce</span>
+                    <span><i class="far fa-calendar"></i> Nov 21, 2025</span>
+                </div>
+            </div>
+
+            <div class="tip-card" data-category="reuse">
+                <div class="tip-header">
+                    <i class="fas fa-box-open"></i>
+                    <h3>Repurpose Glass Jars</h3>
+                </div>
+                <div class="tip-content">
+                    <p>Glass jars from sauces, jams, and pickles can be transformed into useful household items:</p>
+                    <ul>
+                        <li>Storage containers for pantry items</li>
+                        <li>Vases for flowers</li>
+                        <li>Candle holders</li>
+                        <li>Organizers for small items like buttons or spices</li>
+                    </ul>
+                    <p>Clean thoroughly and remove labels for the best results. Decorate with paint or ribbons for a personalized touch.</p>
+                </div>
+                <div class="tip-meta">
+                    <span><i class="fas fa-tag"></i> Reuse</span>
+                    <span><i class="far fa-calendar"></i> Nov 20, 2025</span>
+                </div>
+            </div>
+
+            <div class="tip-card" data-category="recycle">
+                <div class="tip-header">
+                    <i class="fas fa-recycle"></i>
+                    <h3>Proper Recycling Preparation</h3>
+                </div>
+                <div class="tip-content">
+                    <p>Maximize your recycling efforts with these preparation tips:</p>
+                    <ul>
+                        <li>Rinse containers to remove food residue</li>
+                        <li>Remove caps and lids (unless specified otherwise)</li>
+                        <li>Flatten cardboard boxes to save space</li>
+                        <li>Check local guidelines for accepted materials</li>
+                    </ul>
+                    <p>Contaminated recyclables often end up in landfills, so proper preparation is crucial for effective recycling.</p>
+                </div>
+                <div class="tip-meta">
+                    <span><i class="fas fa-tag"></i> Recycle</span>
+                    <span><i class="far fa-calendar"></i> Nov 19, 2025</span>
+                </div>
+            </div>
+
+            <div class="tip-card" data-category="compost">
+                <div class="tip-header">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Composting Basics</h3>
+                </div>
+                <div class="tip-content">
+                    <p>Turn your organic waste into garden gold with these composting tips:</p>
+                    <ul>
+                        <li>Balance "greens" (food scraps) with "browns" (dry leaves)</li>
+                        <li>Chop materials into smaller pieces for faster decomposition</li>
+                        <li>Turn the pile regularly to aerate</li>
+                        <li>Keep the pile as moist as a wrung-out sponge</li>
+                    </ul>
+                    <p>Avoid meat, dairy, and pet waste which can attract pests and create odors.</p>
+                </div>
+                <div class="tip-meta">
+                    <span><i class="fas fa-tag"></i> Compost</span>
+                    <span><i class="far fa-calendar"></i> Nov 18, 2025</span>
+                </div>
+            </div>
+
+            <div class="tip-card" data-category="reduce">
+                <div class="tip-header">
+                    <i class="fas fa-tshirt"></i>
+                    <h3>Extend Clothing Life</h3>
+                </div>
+                <div class="tip-content">
+                    <p>Reduce textile waste by caring for your clothes properly:</p>
+                    <ul>
+                        <li>Wash in cold water to prevent shrinking and fading</li>
+                        <li>Air dry instead of using the dryer</li>
+                        <li>Repair small tears or missing buttons promptly</li>
+                        <li>Rotate your wardrobe to reduce wear on individual items</li>
+                    </ul>
+                    <p>Proper care can extend the life of your clothes by years, reducing the need for new purchases.</p>
+                </div>
+                <div class="tip-meta">
+                    <span><i class="fas fa-tag"></i> Reduce</span>
+                    <span><i class="far fa-calendar"></i> Nov 17, 2025</span>
+                </div>
+            </div>
+
+            <div class="tip-card" data-category="reuse">
+                <div class="tip-header">
+                    <i class="fas fa-book"></i>
+                    <h3>Upcycle Old Books</h3>
+                </div>
+                <div class="tip-content">
+                    <p>Transform old books into creative home decor:</p>
+                    <ul>
+                        <li>Create a unique bookshelf by stacking and gluing books</li>
+                        <li>Use pages for papercraft projects</li>
+                        <li>Make gift wrap by cutting out interesting pages</li>
+                        <li>Carve books into artistic sculptures</li>
+                    </ul>
+                    <p>Upcycling gives old books new life while preventing them from ending up in landfills.</p>
+                </div>
+                <div class="tip-meta">
+                    <span><i class="fas fa-tag"></i> Reuse</span>
+                    <span><i class="far fa-calendar"></i> Nov 16, 2025</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Educate. Segregate. Sustain.</p>
+    </footer>
+
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const tipCards = document.querySelectorAll('.tip-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Get category to filter by
+                const category = button.getAttribute('data-category');
+                
+                // Show/hide tip cards based on category
+                tipCards.forEach(card => {
+                    if (category === 'all' || card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        document.getElementById('classify-link').addEventListener('click', function(e) {
+            // Navigate to the classification page
+            window.location.href = '/classify';
+        });
+    </script>
+</body>
+</html>

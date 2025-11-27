@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waste Segregation Guides - GreenGuide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f8f0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #2e7d32;
+            color: white;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 2.5rem;
+        }
+
+        nav {
+            background-color: #388e3c;
+            padding: 0.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0.5rem 1rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #e8f5e9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2e7d32;
+        }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background-color: #8bc34a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .category-btn.active, .category-btn:hover {
+            background-color: #2e7d32;
+        }
+
+        .guide-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .guide-section {
+            display: none;
+        }
+
+        .guide-section.active {
+            display: block;
+        }
+
+        .guide-section h3 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .guide-section ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .guide-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .example-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .example-card i {
+            font-size: 2.5rem;
+            color: #2e7d32;
+            margin-bottom: 1rem;
+        }
+
+        .do-dont {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .do, .dont {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .do h4, .dont h4 {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+
+        .do h4 {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .dont h4 {
+            background-color: #ffcdd2;
+            color: #c62828;
+        }
+
+        footer {
+            background-color: #1b5e20;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.3rem 0;
+            }
+            
+            .do-dont {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            <h1>GreenGuide</h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/guide"><i class="fas fa-book"></i> Guides</a></li>
+            <li><a href="/disposal"><i class="fas fa-trash-alt"></i> Disposal</a></li>
+            <li><a href="/tips"><i class="fas fa-lightbulb"></i> Tips</a></li>
+            <li><a href="/quiz"><i class="fas fa-question-circle"></i> Quiz</a></li>
+            <li><a href="#" id="classify-link"><i class="fas fa-camera"></i> Classify Trash</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h2>Waste Segregation Guides</h2>
+            <p>Learn how to properly sort your waste into the right categories</p>
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active" data-category="recyclable">Recyclable</button>
+            <button class="category-btn" data-category="biodegradable">Biodegradable</button>
+            <button class="category-btn" data-category="general">General Waste</button>
+        </div>
+
+        <div class="guide-content">
+            <!-- Recyclable Waste Section -->
+            <div id="recyclable" class="guide-section active">
+                <h3>Recyclable Waste</h3>
+                <p>Recyclable waste consists of materials that can be processed and reused to make new products.</p>
+                
+                <h4>Common Items:</h4>
+                <ul>
+                    <li>Paper products (newspapers, magazines, cardboard)</li>
+                    <li>Plastic bottles and containers (check for recycling symbols)</li>
+                    <li>Glass bottles and jars</li>
+                    <li>Metal cans (aluminum, steel)</li>
+                    <li>Clean aluminum foil</li>
+                </ul>
+
+                <div class="examples">
+                    <div class="example-card">
+                        <i class="fas fa-newspaper"></i>
+                        <h4>Newspaper</h4>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-wine-bottle"></i>
+                        <h4>Glass Bottles</h4>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-prescription-bottle"></i>
+                        <h4>Plastic Bottles</h4>
+                    </div>
+                </div>
+
+                <div class="do-dont">
+                    <div class="do">
+                        <h4><i class="fas fa-check-circle"></i> What to Do</h4>
+                        <ul>
+                            <li>Rinse containers before recycling</li>
+                            <li>Remove caps and lids (unless specified otherwise)</li>
+                            <li>Flatten cardboard boxes to save space</li>
+                            <li>Check local guidelines for specific materials</li>
+                        </ul>
+                    </div>
+                    <div class="dont">
+                        <h4><i class="fas fa-times-circle"></i> What Not to Do</h4>
+                        <ul>
+                            <li>Don't recycle plastic bags (take to grocery stores)</li>
+                            <li>Don't include greasy pizza boxes</li>
+                            <li>Don't recycle broken glass or ceramics</li>
+                            <li>Don't mix different materials together</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Biodegradable Waste Section -->
+            <div id="biodegradable" class="guide-section">
+                <h3>Biodegradable Waste</h3>
+                <p>Biodegradable waste consists of organic materials that can decompose naturally and become compost.</p>
+                
+                <h4>Common Items:</h4>
+                <ul>
+                    <li>Food scraps (fruits, vegetables, bread)</li>
+                    <li>Coffee grounds and tea bags</li>
+                    <li>Eggshells and nutshells</li>
+                    <li>Garden waste (leaves, grass clippings)</li>
+                    <li>Paper towels and napkins (unbleached)</li>
+                </ul>
+
+                <div class="examples">
+                    <div class="example-card">
+                        <i class="fas fa-apple-alt"></i>
+                        <h4>Fruit Scraps</h4>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-leaf"></i>
+                        <h4>Garden Waste</h4>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-mug-hot"></i>
+                        <h4>Coffee Grounds</h4>
+                    </div>
+                </div>
+
+                <div class="do-dont">
+                    <div class="do">
+                        <h4><i class="fas fa-check-circle"></i> What to Do</h4>
+                        <ul>
+                            <li>Use a dedicated compost bin</li>
+                            <li>Chop larger items into smaller pieces</li>
+                            <li>Mix "greens" (food scraps) with "browns" (dry leaves)</li>
+                            <li>Turn the compost regularly for aeration</li>
+                        </ul>
+                    </div>
+                    <div class="dont">
+                        <h4><i class="fas fa-times-circle"></i> What Not to Do</h4>
+                        <ul>
+                            <li>Don't include meat or dairy products</li>
+                            <li>Don't add pet waste or diapers</li>
+                            <li>Don't include diseased plants</li>
+                            <li>Don't add oils or fats</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- General Waste Section -->
+            <div id="general" class="guide-section">
+                <h3>General Waste</h3>
+                <p>General waste consists of materials that cannot be recycled or composted and must go to landfill.</p>
+                
+                <h4>Common Items:</h4>
+                <ul>
+                    <li>Plastic wrap and Styrofoam</li>
+                    <li>Used tissues and paper towels</li>
+                    <li>Cigarette butts</li>
+                    <li>Broken ceramics and light bulbs</li>
+                    <li>Disposable diapers</li>
+                </ul>
+
+                <div class="examples">
+                    <div class="example-card">
+                        <i class="fas fa-plastic"></i>
+                        <h4>Plastic Wrap</h4>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-tissue"></i>
+                        <h4>Used Tissues</h4>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>Light Bulbs</h4>
+                    </div>
+                </div>
+
+                <div class="do-dont">
+                    <div class="do">
+                        <h4><i class="fas fa-check-circle"></i> What to Do</h4>
+                        <ul>
+                            <li>Ensure items are completely dry</li>
+                            <li>Place in designated general waste bin</li>
+                            <li>Minimize waste by choosing reusable alternatives</li>
+                            <li>Check if hazardous items have special disposal locations</li>
+                        </ul>
+                    </div>
+                    <div class="dont">
+                        <h4><i class="fas fa-times-circle"></i> What Not to Do</h4>
+                        <ul>
+                            <li>Don't burn waste in open areas</li>
+                            <li>Don't mix with recyclables or compost</li>
+                            <li>Don't include electronic waste</li>
+                            <li>Don't dispose of hazardous materials here</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Educate. Segregate. Sustain.</p>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const guideSections = document.querySelectorAll('.guide-section');
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and sections
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                guideSections.forEach(section => section.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Show corresponding section
+                const category = button.getAttribute('data-category');
+                document.getElementById(category).classList.add('active');
+            });
+        });
+
+        document.getElementById('classify-link').addEventListener('click', function(e) {
+            // Navigate to the classification page
+            window.location.href = '/classify';
+        });
+    </script>
+</body>
+</html>

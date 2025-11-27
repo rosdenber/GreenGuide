@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trash Classification - GreenGuide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f8f0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #2e7d32;
+            color: white;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 2.5rem;
+        }
+
+        nav {
+            background-color: #388e3c;
+            padding: 0.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0.5rem 1rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #e8f5e9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2e7d32;
+        }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .classification-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .upload-section {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .result-section {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .upload-area {
+            border: 2px dashed #8bc34a;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover {
+            background-color: #f1f8e9;
+        }
+
+        .upload-area i {
+            font-size: 3rem;
+            color: #8bc34a;
+            margin-bottom: 1rem;
+        }
+
+        .upload-area p {
+            margin-bottom: 1rem;
+        }
+
+        .btn {
+            background-color: #8bc34a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #2e7d32;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-content {
+            text-align: center;
+        }
+
+        .result-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .biodegradable {
+            color: #4caf50;
+        }
+
+        .recyclable {
+            color: #2196f3;
+        }
+
+        .general {
+            color: #ff9800;
+        }
+
+        .result-category {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .result-confidence {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-info {
+            background-color: #e8f5e9;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .result-info h3 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+        }
+
+        .result-info ul {
+            margin-left: 1.5rem;
+        }
+
+        .result-info li {
+            margin-bottom: 0.5rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #8bc34a;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        footer {
+            background-color: #1b5e20;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            margin-top: 2rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.3rem 0;
+            }
+            
+            .classification-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            <h1>GreenGuide</h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/guide"><i class="fas fa-book"></i> Guides</a></li>
+            <li><a href="/disposal"><i class="fas fa-trash-alt"></i> Disposal</a></li>
+            <li><a href="/tips"><i class="fas fa-lightbulb"></i> Tips</a></li>
+            <li><a href="/quiz"><i class="fas fa-question-circle"></i> Quiz</a></li>
+            <li><a href="/classify"><i class="fas fa-camera"></i> Classify Trash</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h2>Trash Classification</h2>
+            <p>Upload an image of waste or capture using your camera to identify the correct category</p>
+        </div>
+
+        <div class="classification-container">
+            <div class="upload-section">
+                <h3>Upload or Capture Waste Image</h3>
+                <p>Select an image of your waste item or capture one with your camera</p>
+                
+                <!-- Camera capture section -->
+                <div id="cameraSection" style="margin-bottom: 1.5rem; display: none;">
+                    <video id="video" autoplay playsinline style="width: 100%; max-width: 100%; border-radius: 10px; margin-bottom: 1rem;"></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <button class="btn" id="captureBtn">Capture Photo</button>
+                </div>
+                
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drag & drop your image here</p>
+                    <p>or</p>
+                    <button class="btn" id="browseBtn">Browse Files</button>
+                    <button class="btn" id="cameraBtn" style="margin-top: 10px;"><i class="fas fa-camera"></i> Use Camera</button>
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                </div>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Analyzing your image...</p>
+                </div>
+                
+                <button class="btn" id="classifyBtn" disabled>Classify Waste</button>
+            </div>
+            
+            <div class="result-section" id="resultSection">
+                <h3>Classification Result</h3>
+                <div class="result-content">
+                    <div class="result-icon">
+                        <i class="fas fa-recycle" id="resultIcon"></i>
+                    </div>
+                    <div class="result-category" id="resultCategory">Recyclable</div>
+                    <div class="result-confidence" id="resultConfidence">Confidence: 92%</div>
+                    
+                    <div class="result-info">
+                        <h3>What to do:</h3>
+                        <ul id="resultInstructions">
+                            <li>Rinse containers before recycling</li>
+                            <li>Remove caps and lids</li>
+                            <li>Flatten cardboard boxes to save space</li>
+                            <li>Check local guidelines for specific materials</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="btn" id="classifyAgainBtn">Classify Another Item</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Educate. Segregate. Sustain.</p>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const browseBtn = document.getElementById('browseBtn');
+        const cameraBtn = document.getElementById('cameraBtn');
+        const classifyBtn = document.getElementById('classifyBtn');
+        const loading = document.getElementById('loading');
+        const resultSection = document.getElementById('resultSection');
+        const resultIcon = document.getElementById('resultIcon');
+        const resultCategory = document.getElementById('resultCategory');
+        const resultConfidence = document.getElementById('resultConfidence');
+        const resultInstructions = document.getElementById('resultInstructions');
+        const classifyAgainBtn = document.getElementById('classifyAgainBtn');
+        
+        // Camera elements
+        const cameraSection = document.getElementById('cameraSection');
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const captureBtn = document.getElementById('captureBtn');
+        
+        let stream = null;
+        let capturedImage = null;
+
+        // Event Listeners
+        browseBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+        
+        cameraBtn.addEventListener('click', toggleCamera);
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '#f1f8e9';
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.style.backgroundColor = '';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.style.backgroundColor = '';
+            if (e.dataTransfer.files.length) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) {
+                handleFile(fileInput.files[0]);
+            }
+        });
+
+        classifyBtn.addEventListener('click', classifyWaste);
+        classifyAgainBtn.addEventListener('click', resetClassification);
+        
+        // Camera event listeners
+        captureBtn.addEventListener('click', capturePhoto);
+
+        // Handle file selection
+        function handleFile(file) {
+            if (!file.type.match('image.*')) {
+                alert('Please select an image file');
+                return;
+            }
+
+            // Preview the image
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                uploadArea.innerHTML = `
+                    <img src="${e.target.result}" style="max-width: 100%; max-height: 200px; border-radius: 10px;">
+                    <p>${file.name}</p>
+                `;
+            };
+            reader.readAsDataURL(file);
+
+            // Enable classify button
+            classifyBtn.disabled = false;
+            classifyBtn.dataset.file = file.name;
+        }
+        
+        // Toggle camera functionality
+        async function toggleCamera() {
+            if (cameraSection.style.display === 'none') {
+                // Show camera section
+                cameraSection.style.display = 'block';
+                uploadArea.style.display = 'none';
+                
+                try {
+                    // Get camera access
+                    stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    video.srcObject = stream;
+                } catch (err) {
+                    console.error("Error accessing camera:", err);
+                    alert('Could not access camera. Please make sure you have granted camera permissions.');
+                    cameraSection.style.display = 'none';
+                    uploadArea.style.display = 'block';
+                }
+            } else {
+                // Hide camera section and stop stream
+                cameraSection.style.display = 'none';
+                uploadArea.style.display = 'block';
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    stream = null;
+                }
+            }
+        }
+        
+        // Capture photo from camera
+        function capturePhoto() {
+            // Set canvas dimensions to match video
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            
+            // Draw video frame to canvas
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            // Convert to blob and create file object
+            canvas.toBlob((blob) => {
+                if (blob) {
+                    const file = new File([blob], "captured-image.jpg", { type: "image/jpeg" });
+                    capturedImage = file;
+                    
+                    // Preview the captured image
+                    const imageUrl = URL.createObjectURL(blob);
+                    uploadArea.innerHTML = `
+                        <img src="${imageUrl}" style="max-width: 100%; max-height: 200px; border-radius: 10px;">
+                        <p>Captured Image</p>
+                    `;
+                    
+                    // Enable classify button
+                    classifyBtn.disabled = false;
+                    
+                    // Hide camera and show upload area
+                    cameraSection.style.display = 'none';
+                    uploadArea.style.display = 'block';
+                    
+                    // Stop camera stream
+                    if (stream) {
+                        stream.getTracks().forEach(track => track.stop());
+                        stream = null;
+                    }
+                }
+            }, 'image/jpeg');
+        }
+
+        // Classify waste using the backend API
+        async function classifyWaste() {
+            let fileToSend;
+            
+            if (capturedImage) {
+                // Use captured image from camera
+                fileToSend = capturedImage;
+            } else if (fileInput.files.length) {
+                // Use uploaded file
+                fileToSend = fileInput.files[0];
+            } else {
+                alert('Please select an image or capture one with your camera first');
+                return;
+            }
+            
+            // Show loading state
+            loading.style.display = 'block';
+            classifyBtn.disabled = true;
+            
+            try {
+                const formData = new FormData();
+                formData.append('trashImage', fileToSend);
+                
+                const response = await fetch('/classify', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showResult(result);
+                } else {
+                    alert('Classification failed: ' + result.message);
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                loading.style.display = 'none';
+                classifyBtn.disabled = false;
+            }
+        }
+
+        // Show classification result
+        function showResult(data) {
+            // Check if we have the required data
+            if (!data || !data.category) {
+                alert('Invalid classification result received');
+                return;
+            }
+            
+            const category = data.category;
+            const confidence = data.confidence ? (data.confidence * 100).toFixed(0) : 'N/A';
+            
+            // Set category and confidence
+            if (category === 'unclassified') {
+                resultCategory.textContent = 'Unclassified';
+            } else if (category) {
+                // Format the category name for better display
+                let formattedCategory = category;
+                switch(category.toLowerCase()) {
+                    case 'clothes(biodegradable)':
+                        formattedCategory = 'Clothes (Biodegradable)';
+                        break;
+                    case 'glass(non-biodegradable but recyclable)':
+                        formattedCategory = 'Glass (Recyclable)';
+                        break;
+                    case 'metal(non-biodegradable but recyclable)':
+                        formattedCategory = 'Metal (Recyclable)';
+                        break;
+                    case 'paper(biodegradable)':
+                        formattedCategory = 'Paper (Biodegradable)';
+                        break;
+                    case 'plastic(non-biodegradable but recyclable)':
+                        formattedCategory = 'Plastic (Recyclable)';
+                        break;
+                    case 'rubber(non-biodegradable but recyclable)':
+                        formattedCategory = 'Rubber (Recyclable)';
+                        break;
+                    default:
+                        formattedCategory = category.charAt(0).toUpperCase() + category.slice(1);
+                }
+                resultCategory.textContent = formattedCategory;
+            } else {
+                resultCategory.textContent = 'Unknown';
+            }
+            
+            if (category === 'unclassified') {
+                resultConfidence.textContent = data.message || 'No waste items detected';
+            } else {
+                resultConfidence.textContent = `Confidence: ${confidence}%`;
+            }
+            
+            // Set icon and color based on category
+            resultIcon.className = 'fas fa-recycle result-icon';
+            
+            // Handle specific waste categories from the Roboflow model
+            switch(category.toLowerCase()) {
+                case 'clothes waste':
+                case 'clothes(biodegradable)':
+                case 'green waste':
+                case 'paper(biodegradable)':
+                    resultIcon.className += ' biodegradable';
+                    resultInstructions.innerHTML = `
+                        <li>Place in designated biodegradable waste bin</li>
+                        <li>Can be composted if you have a compost bin</li>
+                        <li>Remove any non-biodegradable packaging first</li>
+                        <li>Keep organic waste separate from other materials</li>
+                    `;
+                    break;
+                    
+                case 'glass(non-biodegradable but recyclable)':
+                case 'metal(non-biodegradable but recyclable)':
+                case 'plastic(non-biodegradable but recyclable)':
+                case 'rubber(non-biodegradable but recyclable)':
+                    resultIcon.className += ' recyclable';
+                    resultInstructions.innerHTML = `
+                        <li>Rinse containers before recycling</li>
+                        <li>Remove caps and lids</li>
+                        <li>Flatten cardboard boxes to save space</li>
+                        <li>Check local guidelines for specific materials</li>
+                    `;
+                    break;
+                    
+                case 'hazardous waste':
+                    resultIcon.className += ' general';
+                    resultInstructions.innerHTML = `
+                        <li><strong>Hazardous waste requires special disposal</strong></li>
+                        <li>Do not place in regular waste bins</li>
+                        <li>Contact your local waste management authority</li>
+                        <li>Look for designated hazardous waste collection points</li>
+                    `;
+                    break;
+                    
+                case 'unclassified':
+                    resultIcon.className += ' general';
+                    resultInstructions.innerHTML = `
+                        <li>No waste items were detected in the image</li>
+                        <li>Try capturing a clearer image of a waste item</li>
+                        <li>Make sure the item is well-lit and centered</li>
+                    `;
+                    break;
+                    
+                default:
+                    resultIcon.className += ' general';
+                    resultInstructions.innerHTML = `
+                        <li>Place in designated general waste bin</li>
+                        <li>Ensure items are completely dry</li>
+                        <li>Minimize waste by choosing reusable alternatives</li>
+                        <li>Check if hazardous items have special disposal locations</li>
+                    `;
+            }
+            
+            // Show result section
+            resultSection.style.display = 'block';
+            
+            // Scroll to results
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Reset classification for another item
+        function resetClassification() {
+            // Reset upload area
+            uploadArea.innerHTML = `
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag & drop your image here</p>
+                <p>or</p>
+                <button class="btn" id="browseBtn">Browse Files</button>
+                <button class="btn" id="cameraBtn" style="margin-top: 10px;"><i class="fas fa-camera"></i> Use Camera</button>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            `;
+            
+            // Reset captured image
+            capturedImage = null;
+            
+            // Reattach event listeners
+            document.getElementById('browseBtn').addEventListener('click', () => {
+                document.getElementById('fileInput').click();
+            });
+            
+            document.getElementById('cameraBtn').addEventListener('click', toggleCamera);
+            
+            document.getElementById('fileInput').addEventListener('change', () => {
+                if (document.getElementById('fileInput').files.length) {
+                    handleFile(document.getElementById('fileInput').files[0]);
+                }
+            });
+            
+            // Hide result section
+            resultSection.style.display = 'none';
+            
+            // Reset file input
+            fileInput.value = '';
+            classifyBtn.disabled = true;
+        }
+    </script>
+</body>
+</html>

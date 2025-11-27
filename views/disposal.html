@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proper Disposal Instructions - GreenGuide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f8f0;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #2e7d32;
+            color: white;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .logo h1 {
+            font-size: 2.5rem;
+        }
+
+        nav {
+            background-color: #388e3c;
+            padding: 0.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0.5rem 1rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #e8f5e9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2e7d32;
+        }
+
+        .page-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 2px solid #8bc34a;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-box button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: #8bc34a;
+            border: none;
+            border-radius: 30px;
+            padding: 7px 15px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background-color: #8bc34a;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .category-btn.active, .category-btn:hover {
+            background-color: #2e7d32;
+        }
+
+        .disposal-content {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .disposal-section {
+            display: none;
+        }
+
+        .disposal-section.active {
+            display: block;
+        }
+
+        .disposal-section h3 {
+            color: #2e7d32;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .item-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .item-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .item-card h4 {
+            color: #2e7d32;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .item-card h4 i {
+            font-size: 1.5rem;
+        }
+
+        .disposal-steps {
+            margin-top: 1rem;
+        }
+
+        .disposal-steps ol {
+            margin-left: 1.5rem;
+        }
+
+        .disposal-steps li {
+            margin-bottom: 0.5rem;
+        }
+
+        .special-note {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 0 4px 4px 0;
+        }
+
+        footer {
+            background-color: #1b5e20;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 0.3rem 0;
+            }
+            
+            .categories {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-leaf"></i>
+            <h1>GreenGuide</h1>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="/guide"><i class="fas fa-book"></i> Guides</a></li>
+            <li><a href="/disposal"><i class="fas fa-trash-alt"></i> Disposal</a></li>
+            <li><a href="/tips"><i class="fas fa-lightbulb"></i> Tips</a></li>
+            <li><a href="/quiz"><i class="fas fa-question-circle"></i> Quiz</a></li>
+            <li><a href="#" id="classify-link"><i class="fas fa-camera"></i> Classify Trash</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h2>Proper Disposal Instructions</h2>
+            <p>Step-by-step instructions on how to dispose of common items properly</p>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="Search for disposal instructions...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+
+        <div class="categories">
+            <button class="category-btn active" data-category="household">Household Items</button>
+            <button class="category-btn" data-category="electronics">Electronics</button>
+            <button class="category-btn" data-category="hazardous">Hazardous Waste</button>
+            <button class="category-btn" data-category="special">Special Items</button>
+        </div>
+
+        <div class="disposal-content">
+            <!-- Household Items Section -->
+            <div id="household" class="disposal-section active">
+                <h3>Household Items</h3>
+                <p>Proper disposal methods for common household waste items.</p>
+                
+                <div class="item-grid">
+                    <div class="item-card">
+                        <h4><i class="fas fa-battery-full"></i> Batteries</h4>
+                        <div class="disposal-steps">
+                            <ol>
+                                <li>Do not throw in regular trash</li>
+                                <li>Take to designated battery recycling centers</li>
+                                <li>Many retailers accept used batteries</li>
+                                <li>Tape terminals to prevent short circuits</li>
+                            </ol>
+                        </div>
+                        <div class="special-note">
+                            <strong>Note:</strong> Rechargeable batteries require special handling. Contact local recycling centers for specific instructions.
+                        </div>
+                    </div>
+                    
+                    <div class="item-card">
+                        <h4><i class="fas fa-lightbulb"></i> Light Bulbs</h4>
+                        <div class="disposal-steps">
+                            <ol>
+                                <li>LED bulbs: Can be recycled at hardware stores</li>
+                                <li>Incandescent bulbs: Wrap in paper and dispose in general waste</li>
+                                <li>Fluorescent bulbs: Take to hazardous waste facilities</li>
+                                <li>Handle carefully to avoid breakage</li>
+                            </ol>
+                        </div>
+                        <div class="special-note">
+                            <strong>Note:</strong> Broken fluorescent bulbs contain mercury and require special disposal procedures.
+                        </div>
+                    </div>
+                    
+                    <div class="item-card">
+                        <h4><i class="fas fa-spray-can"></i> Aerosol Cans</h4>
+                        <div class="disposal-steps">
+                            <ol>
+                                <li>Use up all contents completely</li>
+                                <li>Remove plastic cap and dispose separately</li>
+                                <li>Place empty can in recycling bin</li>
+                                <li>If partially full, take to hazardous waste facility</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Electronics Section -->
+            <div id="electronics" class="disposal-section">
+                <h3>Electronics</h3>
+                <p>Safe disposal methods for electronic devices to prevent environmental contamination.</p>
+                
+                <div class="item-grid">
+                    <div class="item-card">
+                        <h4><i class="fas fa-mobile-alt"></i> Mobile Phones</h4>
+                        <div class="disposal-steps">
+                            <ol>
+                                <li>Backup and erase all personal data</li>
+                                <li>Remove SIM and memory cards</li>
+                                <li>Find certified e-waste recyclers</li>
+                                <li>Many manufacturers offer take-back programs</li>
+                            </ol>
+                        </div>
+                        <div class="special-note">
+                            <strong>Note:</strong> Mobile phones contain valuable materials that can be recovered through proper recycling.
+                        </div>
+                    </div>
+                    
+                    <div class="item-card">
+                        <h4><i class="fas fa-laptop"></i> Computers</h4>
+                        <div class="disposal-steps">
+                            <ol>
+                                <li>Backup important data to cloud or external storage</li>
+                                <li>Use factory reset to wipe hard drive</li>
+                                <li>Donate if still functional</li>
+                                <li>Otherwise, take to certified e-waste facilities</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hazardous Waste Section -->
+            <div id="hazardous" class="disposal-section">
+                <h3>Hazardous Waste</h3>
+                <p>Special disposal instructions for items that can harm human health or the environment.</p>
+                
+                <div class="item-grid">
+                    <div class="item-card">
+                        <h4><i class="fas fa-flask"></i> Paint and Solvents</h4>
+                        <div class="disposal-steps">
+                            <ol>
+                                <li>Do not pour down drains or on the ground</li>
+                                <li>Take to hazardous waste collection events</li>
+                                <li>Latex paint: Dry out and dispose in general waste</li>
+                                <li>Oil-based paint: Always take to hazardous waste facilities</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="item-card">
+                        <h4><i class="fas fa-prescription-bottle"></i> Medications</h4>
+                        <div class="disposal-steps">
+                            <ol>
+                                <li>Do not flush down the toilet</li>
+                                <li>Remove personal information from labels</li>
+                                <li>Take to pharmacy medication take-back programs</li>
+                                <li>Mix with undesirable substances before disposal</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Special Items Section -->
+            <div id="special" class="disposal-section">
+                <h3>Special Items</h3>
+                <p>Disposal instructions for items that require special handling or have unique requirements.</p>
+                
+                <div class="item-grid">
+                    <div class="item-card">
+                        <h4><i class="fas fa-tshirt"></i> Textiles</h4>
+                        <div class="disposal-steps">
+                            <ol>
+                                <li>Donate wearable items to charity</li>
+                                <li>Check for textile recycling programs</li>
+                                <li>Cut up damaged items to prevent reuse</li>
+                                <li>Place in designated textile recycling bins</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="item-card">
+                        <h4><i class="fas fa-car"></i> Tires</h4>
+                        <div class="disposal-steps">
+                            <ol>
+                                <li>Do not illegally dump tires</li>
+                                <li>Take to tire retailers or recycling centers</li>
+                                <li>Some auto shops offer tire disposal services</li>
+                                <li>Check for local tire recycling programs</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Educate. Segregate. Sustain.</p>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const disposalSections = document.querySelectorAll('.disposal-section');
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and sections
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                disposalSections.forEach(section => section.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Show corresponding section
+                const category = button.getAttribute('data-category');
+                document.getElementById(category).classList.add('active');
+            });
+        });
+
+        // Search functionality
+        document.getElementById('search-input').addEventListener('keyup', function(e) {
+            if (e.key === 'Enter') {
+                alert('Search functionality will be implemented with backend integration. For now, please browse the categories above.');
+            }
+        });
+
+        document.getElementById('classify-link').addEventListener('click', function(e) {
+            // Navigate to the classification page
+            window.location.href = '/classify';
+        });
+    </script>
+</body>
+</html>
