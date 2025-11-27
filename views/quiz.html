@@ -252,41 +252,34 @@
             justify-content: center;
             gap: 1rem;
             margin: 2rem 0;
+            align-items: flex-end;
+            height: 180px;
         }
 
         .podium-item {
             text-align: center;
-            background-color: #f5f5f5;
             border-radius: 5px;
-            padding: 1rem;
             min-width: 100px;
+            display: flex;
+            flex-direction: column;
         }
 
         .podium-item.first {
             background-color: #ffd700;
-            order: 2;
-            height: 120px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            height: 150px;
+            width: 120px;
         }
 
         .podium-item.second {
             background-color: #c0c0c0;
-            order: 1;
-            height: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            height: 130px;
+            width: 110px;
         }
 
         .podium-item.third {
             background-color: #cd7f32;
-            order: 3;
-            height: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            height: 110px;
+            width: 100px;
         }
 
         .podium-rank {
@@ -296,7 +289,27 @@
 
         .podium-nickname {
             font-weight: bold;
-            margin: 0.5rem 0;
+            padding: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        
+        .podium-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            padding: 0.5rem;
+        }
+        
+        .no-data {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 2rem;
         }
 
         /* Review Section Styles */
@@ -461,6 +474,10 @@
                         <input type="text" id="nickname" placeholder="Enter nickname" style="padding: 10px; width: 250px; margin: 1rem;">
                         <button id="save-score" class="btn">Save Score</button>
                     </div>
+                    
+                    <div class="btn-container" id="restart-btn-container" style="display: none; margin-top: 1rem;">
+                        <button id="restart-quiz" class="btn">Take Quiz Again</button>
+                    </div>
                 </div>
             </div>
             
@@ -483,21 +500,27 @@
             
             <div class="podium">
                 <div class="podium-item second">
-                    <div class="podium-rank">2nd</div>
                     <div class="podium-nickname">GreenGuru</div>
-                    <div class="score">8 pts</div>
+                    <div class="podium-content">
+                        <div class="podium-rank">2nd</div>
+                        <div class="score">8 pts</div>
+                    </div>
                 </div>
                 
                 <div class="podium-item first">
-                    <div class="podium-rank">1st</div>
                     <div class="podium-nickname">EcoWarrior</div>
-                    <div class="score">10 pts</div>
+                    <div class="podium-content">
+                        <div class="podium-rank">1st</div>
+                        <div class="score">10 pts</div>
+                    </div>
                 </div>
                 
                 <div class="podium-item third">
-                    <div class="podium-rank">3rd</div>
                     <div class="podium-nickname">RecycleRex</div>
-                    <div class="score">7 pts</div>
+                    <div class="podium-content">
+                        <div class="podium-rank">3rd</div>
+                        <div class="score">7 pts</div>
+                    </div>
                 </div>
             </div>
             
@@ -536,6 +559,9 @@
         const nicknameInput = document.getElementById('nickname');
         const questionsContainer = document.getElementById('questions-container');
         const reviewContainer = document.getElementById('review-container');
+        const podiumContainer = document.querySelector('.podium');
+        const leaderboardList = document.querySelector('.leaderboard-list');
+        const restartQuizBtn = document.getElementById('restart-quiz');
 
         // Quiz data
         let quizData = [];
@@ -555,15 +581,17 @@
 
         // Function to select 10 random questions from the quiz data
         function selectRandomQuestions(questions) {
-            // Make a copy of the array to avoid modifying the original
-            const questionsCopy = [...questions];
-            // Shuffle the questions using Fisher-Yates algorithm
-            for (let i = questionsCopy.length - 1; i > 0; i--) {
+            // Create array of indices
+            const indices = questions.map((_, index) => index);
+            // Shuffle the indices using Fisher-Yates algorithm
+            for (let i = indices.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [questionsCopy[i], questionsCopy[j]] = [questionsCopy[j], questionsCopy[i]];
+                [indices[i], indices[j]] = [indices[j], indices[i]];
             }
-            // Return the first 10 questions
-            return questionsCopy.slice(0, 10);
+            // Take the first 10 indices
+            const selectedIndices = indices.slice(0, 10);
+            // Return the selected questions
+            return selectedIndices.map(index => questions[index]);
         }
 
         // Function to generate HTML for a question
@@ -589,11 +617,9 @@
         // Function to render questions
         function renderQuestions() {
             questionsContainer.innerHTML = '';
-            console.log('Rendering', selectedQuestions.length, 'questions');
             selectedQuestions.forEach((question, index) => {
                 questionsContainer.innerHTML += generateQuestionHTML(question, index);
             });
-            console.log('Finished rendering questions');
         }
 
         // Fetch quiz data from API
@@ -610,7 +636,8 @@
         }
 
         // Start quiz
-        startQuizBtn.addEventListener('click', async () => {
+        // Define the start quiz handler function
+        function startQuizHandler() {
             // Show loading state
             startQuizBtn.disabled = true;
             startQuizBtn.textContent = 'Loading...';
@@ -620,35 +647,43 @@
             score = 0;
             document.getElementById('review-btn-container').style.display = 'none';
             
-            // Fetch quiz data
-            const success = await fetchQuizData();
-            
-            if (success) {
-                // Select 10 random questions
-                selectedQuestions = selectRandomQuestions(quizData);
-                
-                // Debug: log the number of selected questions
-                console.log('Total questions in database:', quizData.length);
-                console.log('Selected questions count:', selectedQuestions.length);
-                console.log('Selected questions:', selectedQuestions);
-                
-                // Prepare correct answers array
-                correctAnswers = selectedQuestions.map(q => q.correctAnswer);
-                
-                // Render questions
-                renderQuestions();
-                
-                // Show quiz questions
-                quizIntro.classList.remove('active');
-                quizQuestions.classList.add('active');
-                quizResults.classList.remove('active');
-                quizReview.classList.remove('active');
-            } else {
-                alert('Failed to load quiz. Please try again.');
-                startQuizBtn.disabled = false;
-                startQuizBtn.textContent = 'Start Quiz';
-            }
-        });
+            // Use an IIFE to handle async operations
+            (async () => {
+                try {
+                    // Fetch quiz data
+                    const success = await fetchQuizData();
+                    
+                    if (success) {
+                        // Select 10 random questions
+                        selectedQuestions = selectRandomQuestions(quizData);
+                        
+                        // Prepare correct answers array
+                        correctAnswers = selectedQuestions.map(q => q.correctAnswer);
+                        
+                        // Render questions
+                        renderQuestions();
+                        
+                        // Show quiz questions
+                        quizIntro.classList.remove('active');
+                        quizQuestions.classList.add('active');
+                        quizResults.classList.remove('active');
+                        quizReview.classList.remove('active');
+                    } else {
+                        alert('Failed to load quiz. Please try again.');
+                        startQuizBtn.disabled = false;
+                        startQuizBtn.textContent = 'Start Quiz';
+                    }
+                } catch (error) {
+                    console.error('Error starting quiz:', error);
+                    alert('Failed to load quiz. Please try again.');
+                    startQuizBtn.disabled = false;
+                    startQuizBtn.textContent = 'Start Quiz';
+                }
+            })();
+        }
+        
+        // Add the event listener
+        startQuizBtn.addEventListener('click', startQuizHandler);
 
         // Submit quiz
         submitQuizBtn.addEventListener('click', () => {
@@ -679,14 +714,64 @@
         });
 
         // Save score
-        saveScoreBtn.addEventListener('click', () => {
+        saveScoreBtn.addEventListener('click', async () => {
             const nickname = nicknameInput.value.trim();
             if (nickname) {
-                alert(`Score saved for ${nickname}! You ranked #${Math.floor(Math.random() * 10) + 1} this week.`);
-                // In a real app, this would send data to the server
+                try {
+                    const response = await fetch('/api/quizzes/submit', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            quizId: 1,
+                            score: score, // Send the already calculated score
+                            total: selectedQuestions.length, // Send the total number of questions
+                            nickname: nickname
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        alert(`Score saved for ${nickname}! You scored ${result.score} out of ${result.total}.`);
+                        // Clear the nickname input
+                        nicknameInput.value = '';
+                        // Refresh leaderboard
+                        loadLeaderboard();
+                        // Hide the nickname section and show restart button
+                        document.getElementById('nickname-section').style.display = 'none';
+                        document.getElementById('restart-btn-container').style.display = 'flex';
+                    } else {
+                        alert('Error saving score: ' + result.message);
+                    }
+                } catch (error) {
+                    console.error('Error saving score:', error);
+                    alert('Error saving score. Please try again.');
+                }
             } else {
                 alert('Please enter a nickname to save your score.');
             }
+        });
+
+        // Restart quiz
+        restartQuizBtn.addEventListener('click', () => {
+            // Reset to initial state
+            quizIntro.classList.add('active');
+            quizQuestions.classList.remove('active');
+            quizResults.classList.remove('active');
+            quizReview.classList.remove('active');
+            // Hide restart button
+            document.getElementById('restart-btn-container').style.display = 'none';
+            // Show nickname section for next attempt
+            document.getElementById('nickname-section').style.display = 'block';
+            // Reset start quiz button state
+            startQuizBtn.disabled = false;
+            startQuizBtn.textContent = 'Start Quiz';
+            
+            // Also reset the score display
+            scoreDisplay.textContent = '0';
+            scoreText.textContent = 'You got 0 out of 10 correct!';
         });
 
         // Review quiz
@@ -742,6 +827,103 @@
                 reviewContainer.innerHTML += generateReviewQuestionHTML(question, index, userAnswers[index]);
             });
         }
+
+        // Function to load leaderboard data
+        async function loadLeaderboard() {
+            try {
+                const response = await fetch('/api/quizzes/leaderboard');
+                const leaderboardData = await response.json();
+                
+                if (response.ok) {
+                    renderLeaderboard(leaderboardData);
+                } else {
+                    console.error('Error loading leaderboard:', leaderboardData.message);
+                }
+            } catch (error) {
+                console.error('Error loading leaderboard:', error);
+            }
+        }
+
+        // Function to render leaderboard
+        function renderLeaderboard(leaderboardData) {
+            // Clear existing content
+            podiumContainer.innerHTML = '';
+            leaderboardList.innerHTML = '';
+            
+            // Handle empty leaderboard
+            if (!leaderboardData || leaderboardData.length === 0) {
+                podiumContainer.innerHTML = '<p class="no-data">No leaderboard data available yet.</p>';
+                return;
+            }
+            
+            // Render podium (top 3)
+            // The data should already be sorted by score (desc) from the backend
+            const topThree = leaderboardData.slice(0, 3);
+            
+            // Create podium items in the correct visual order (1st, 2nd, 3rd)
+            if (topThree.length > 0) {
+                // First place (index 0 in sorted array)
+                if (topThree[0]) {
+                    const firstItem = `
+                        <div class="podium-item first">
+                            <div class="podium-nickname">${topThree[0].nickname}</div>
+                            <div class="podium-content">
+                                <div class="podium-rank">1st</div>
+                                <div class="score">${topThree[0].score} pts</div>
+                            </div>
+                        </div>
+                    `;
+                    podiumContainer.innerHTML += firstItem;
+                }
+                
+                // Second place (index 1 in sorted array)
+                if (topThree[1]) {
+                    const secondItem = `
+                        <div class="podium-item second">
+                            <div class="podium-nickname">${topThree[1].nickname}</div>
+                            <div class="podium-content">
+                                <div class="podium-rank">2nd</div>
+                                <div class="score">${topThree[1].score} pts</div>
+                            </div>
+                        </div>
+                    `;
+                    podiumContainer.innerHTML += secondItem;
+                }
+                
+                // Third place (index 2 in sorted array)
+                if (topThree[2]) {
+                    const thirdItem = `
+                        <div class="podium-item third">
+                            <div class="podium-nickname">${topThree[2].nickname}</div>
+                            <div class="podium-content">
+                                <div class="podium-rank">3rd</div>
+                                <div class="score">${topThree[2].score} pts</div>
+                            </div>
+                        </div>
+                    `;
+                    podiumContainer.innerHTML += thirdItem;
+                }
+            }
+            
+            // Render the rest of the leaderboard
+            const remainingPlayers = leaderboardData.slice(3);
+            remainingPlayers.forEach((player, index) => {
+                const rank = index + 4;
+                const listItem = `
+                    <li class="leaderboard-item">
+                        <span class="rank">${rank}</span>
+                        <span class="nickname">${player.nickname}</span>
+                        <span class="score">${player.score} pts</span>
+                    </li>
+                `;
+                leaderboardList.innerHTML += listItem;
+            });
+        }
+
+        // Load leaderboard when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadLeaderboard();
+        });
 
         document.getElementById('classify-link').addEventListener('click', function(e) {
             // Navigate to the classification page

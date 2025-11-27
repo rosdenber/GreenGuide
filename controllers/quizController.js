@@ -42,27 +42,17 @@ exports.createQuiz = (req, res) => {
 
 // Submit quiz answers
 exports.submitQuiz = (req, res) => {
-  const { quizId, answers, nickname } = req.body;
+  const { quizId, score, total, nickname } = req.body;
   
-  // Calculate score
-  Quiz.findById(quizId)
-    .then(quiz => {
-      if (!quiz) {
-        return res.status(404).json({ message: 'Quiz not found' });
-      }
-      
-      let score = 0;
-      quiz.questions.forEach((question, index) => {
-        if (question.correctAnswer === answers[index]) {
-          score += 1;
-        }
-      });
-      
-      // Save to leaderboard
-      return Leaderboard.create({ nickname, score, quizId: quiz.id })
-        .then(() => {
-          res.json({ score, total: quiz.questions.length });
-        });
+  // Validate required fields
+  if (score === undefined || total === undefined || !nickname) {
+    return res.status(400).json({ message: 'Score, total, and nickname are required' });
+  }
+  
+  // Save to leaderboard
+  Leaderboard.create({ nickname, score, quizId })
+    .then(() => {
+      res.json({ score, total });
     })
     .catch(error => {
       res.status(400).json({ message: error.message });
