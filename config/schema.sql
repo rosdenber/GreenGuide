@@ -73,6 +73,96 @@ INSERT INTO quizzes (title, questions) VALUES
         "question": "What is the best way to reduce plastic waste?",
         "options": ["Recycle all plastic items", "Use reusable alternatives", "Throw in general waste", "Burn plastic items"],
         "correctAnswer": 1
+    },
+    {
+        "question": "What should you do with old electronics like phones and computers?",
+        "options": ["Throw them in general waste", "Take them to an e-waste recycling center", "Put them in the recyclable bin", "Bury them in soil"],
+        "correctAnswer": 1
+    },
+    {
+        "question": "Which item belongs in the recyclable bin?",
+        "options": ["Pizza box with grease stains", "Clean aluminum foil", "Used paper towel", "Plastic bag"],
+        "correctAnswer": 1
+    },
+    {
+        "question": "How should you prepare glass bottles for recycling?",
+        "options": ["Remove labels only", "Rinse and remove caps", "Crush them completely", "Leave them dirty"],
+        "correctAnswer": 1
+    },
+    {
+        "question": "What is the purpose of separating waste at home?",
+        "options": ["To make more work for yourself", "To help recycling facilities process materials efficiently", "To create more garbage trucks trips", "To increase landfill usage"],
+        "correctAnswer": 1
+    },
+    {
+        "question": "Which of these hazardous materials requires special disposal?",
+        "options": ["Cardboard box", "Paint cans", "Newspaper", "Plastic bottles"],
+        "correctAnswer": 1
+    },
+    {
+        "question": "What percentage of waste can be recycled or composted in a typical household?",
+        "options": ["10-20%", "30-40%", "50-60%", "70-80%"],
+        "correctAnswer": 3
+    },
+    {
+        "question": "Which of the following is biodegradable?",
+        "options": ["Plastic bag", "Banana peel", "Glass bottle", "Tin can"],
+        "correctAnswer": 1
+    },
+    {
+        "question": "Which waste should go into the non-biodegradable bin?",
+        "options": ["Apple core", "Plastic straw", "Food leftovers", "Dead leaves"],
+        "correctAnswer": 1
+    },
+    {
+        "question": "Which item is recyclable?",
+        "options": ["Used tissue", "Candy wrapper", "Clean cardboard", "Diaper"],
+        "correctAnswer": 2
+    },
+    {
+        "question": "What type of waste is a diaper?",
+        "options": ["Recyclable", "Hazardous", "Residual", "Biodegradable"],
+        "correctAnswer": 2
+    },
+    {
+        "question": "Which of the following is hazardous waste?",
+        "options": ["Orange peel", "Battery", "Paper bag", "Plastic cup"],
+        "correctAnswer": 1
+    },
+    {
+        "question": "Which is an example of e-waste (electronic waste)?",
+        "options": ["Shampoo sachet", "Old cellphone", "Glass jar", "Tin can"],
+        "correctAnswer": 1
+    },
+    {
+        "question": "Which waste belongs to the biodegradable category?",
+        "options": ["Eggshell", "Aluminum can", "Styrofoam", "Broken glass"],
+        "correctAnswer": 0
+    },
+    {
+        "question": "Which of these should be placed in the recyclable bin?",
+        "options": ["Metal can", "Leftover food", "Diaper", "Plastic spoon"],
+        "correctAnswer": 0
+    },
+    {
+        "question": "What type of waste is a candy wrapper?",
+        "options": ["Hazardous", "Biodegradable", "Residual", "Recyclable"],
+        "correctAnswer": 2
+    },
+    {
+        "question": "Where should broken light bulbs be disposed?",
+        "options": ["Biodegradable", "Hazardous", "Recyclable", "Residual"],
+        "correctAnswer": 1
+    },
+    {
+        "question": "Why is it important to segregate waste?",
+        "options": ["To make garbage look colorful", "To reduce pollution and manage waste properly", "To increase trash in landfills", "To make waste heavier"],
+        "correctAnswer": 1
+    },
+    {
+        "question": "What happens when waste is not segregated properly?",
+        "options": ["Waste becomes cleaner", "It may cause pollution and health problems", "Plants grow faster", "It reduces toxic chemicals"],
+        "correctAnswer": 1
     }
 ]');
 

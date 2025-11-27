@@ -299,6 +299,68 @@
             margin: 0.5rem 0;
         }
 
+        /* Review Section Styles */
+        .review-question {
+            border-left: 5px solid #ccc;
+            padding-left: 1rem;
+        }
+
+        .review-question.correct {
+            border-left-color: #4caf50;
+        }
+
+        .review-question.incorrect {
+            border-left-color: #f44336;
+        }
+
+        .review-status {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-question.correct .review-status {
+            color: #4caf50;
+        }
+
+        .review-question.incorrect .review-status {
+            color: #f44336;
+        }
+
+        .correct-answer {
+            background-color: #e8f5e9 !important;
+            border: 2px solid #4caf50 !important;
+        }
+
+        .incorrect-answer {
+            background-color: #ffebee !important;
+            border: 2px solid #f44336 !important;
+        }
+
+        .answer-indicator {
+            margin-left: auto;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .answer-indicator.correct {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .answer-indicator.incorrect {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .explanation {
+            margin-top: 1rem;
+            padding: 10px;
+            background-color: #e3f2fd;
+            border-radius: 5px;
+            font-style: italic;
+        }
+
         footer {
             background-color: #1b5e20;
             color: white;
@@ -374,94 +436,9 @@
             <!-- Quiz Questions -->
             <div id="quiz-questions" class="quiz-section">
                 <form id="quiz-form">
-                    <div class="question">
-                        <div class="question-text">1. Which of the following items is biodegradable?</div>
-                        <div class="options">
-                            <label class="option">
-                                <input type="radio" name="q1" value="0">
-                                Plastic bottle
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="q1" value="1">
-                                Apple core
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="q1" value="2">
-                                Aluminum can
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="q1" value="3">
-                                Glass bottle
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <div class="question-text">2. Where should you dispose of used batteries?</div>
-                        <div class="options">
-                            <label class="option">
-                                <input type="radio" name="q2" value="0">
-                                Recyclable bin
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="q2" value="1">
-                                Biodegradable bin
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="q2" value="2">
-                                General waste bin
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="q2" value="3">
-                                Special collection point
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <div class="question-text">3. Which of these items should NOT be composted?</div>
-                        <div class="options">
-                            <label class="option">
-                                <input type="radio" name="q3" value="0">
-                                Vegetable peels
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="q3" value="1">
-                                Coffee grounds
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="q3" value="2">
-                                Meat scraps
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="q3" value="3">
-                                Eggshells
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="question">
-                        <div class="question-text">4. What is the best way to reduce plastic waste?</div>
-                        <div class="options">
-                            <label class="option">
-                                <input type="radio" name="q4" value="0">
-                                Recycle all plastic items
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="q4" value="1">
-                                Use reusable alternatives
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="q4" value="2">
-                                Throw in general waste
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="q4" value="3">
-                                Burn plastic items
-                            </label>
-                        </div>
-                    </div>
-
+                    <!-- Questions will be dynamically generated here -->
+                    <div id="questions-container"></div>
+                    
                     <div class="btn-container">
                         <button type="button" id="submit-quiz" class="btn">Submit Answers</button>
                     </div>
@@ -473,12 +450,28 @@
                 <div class="result-container">
                     <h3>Quiz Results</h3>
                     <div class="score-display" id="score-display">0</div>
-                    <div class="score-text" id="score-text">You got 0 out of 4 correct!</div>
+                    <div class="score-text" id="score-text">You got 0 out of 10 correct!</div>
+                    
+                    <div class="btn-container" id="review-btn-container" style="display: none;">
+                        <button id="review-quiz" class="btn">Review Answers</button>
+                    </div>
                     
                     <div id="nickname-section">
                         <h4>Enter your nickname for the leaderboard:</h4>
                         <input type="text" id="nickname" placeholder="Enter nickname" style="padding: 10px; width: 250px; margin: 1rem;">
                         <button id="save-score" class="btn">Save Score</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quiz Review -->
+            <div id="quiz-review" class="quiz-section">
+                <div class="result-container">
+                    <h3>Quiz Review</h3>
+                    <div id="review-container"></div>
+                    
+                    <div class="btn-container">
+                        <button id="back-to-results" class="btn">Back to Results</button>
                     </div>
                 </div>
             </div>
@@ -532,34 +525,143 @@
         const quizIntro = document.getElementById('quiz-intro');
         const quizQuestions = document.getElementById('quiz-questions');
         const quizResults = document.getElementById('quiz-results');
+        const quizReview = document.getElementById('quiz-review');
         const startQuizBtn = document.getElementById('start-quiz');
         const submitQuizBtn = document.getElementById('submit-quiz');
         const saveScoreBtn = document.getElementById('save-score');
+        const reviewQuizBtn = document.getElementById('review-quiz');
+        const backToResultsBtn = document.getElementById('back-to-results');
         const scoreDisplay = document.getElementById('score-display');
         const scoreText = document.getElementById('score-text');
         const nicknameInput = document.getElementById('nickname');
+        const questionsContainer = document.getElementById('questions-container');
+        const reviewContainer = document.getElementById('review-container');
 
         // Quiz data
-        const correctAnswers = [1, 3, 2, 1]; // Correct answers for each question
+        let quizData = [];
+        let selectedQuestions = [];
+        let correctAnswers = [];
+        let userAnswers = [];
+        let score = 0;
+
+        // Function to shuffle array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Function to select 10 random questions from the quiz data
+        function selectRandomQuestions(questions) {
+            // Make a copy of the array to avoid modifying the original
+            const questionsCopy = [...questions];
+            // Shuffle the questions using Fisher-Yates algorithm
+            for (let i = questionsCopy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [questionsCopy[i], questionsCopy[j]] = [questionsCopy[j], questionsCopy[i]];
+            }
+            // Return the first 10 questions
+            return questionsCopy.slice(0, 10);
+        }
+
+        // Function to generate HTML for a question
+        function generateQuestionHTML(question, index) {
+            let optionsHTML = '';
+            question.options.forEach((option, optionIndex) => {
+                optionsHTML += `
+                <label class="option">
+                    <input type="radio" name="q${index + 1}" value="${optionIndex}">
+                    ${option}
+                </label>`;
+            });
+
+            return `
+            <div class="question">
+                <div class="question-text">${index + 1}. ${question.question}</div>
+                <div class="options">
+                    ${optionsHTML}
+                </div>
+            </div>`;
+        }
+
+        // Function to render questions
+        function renderQuestions() {
+            questionsContainer.innerHTML = '';
+            console.log('Rendering', selectedQuestions.length, 'questions');
+            selectedQuestions.forEach((question, index) => {
+                questionsContainer.innerHTML += generateQuestionHTML(question, index);
+            });
+            console.log('Finished rendering questions');
+        }
+
+        // Fetch quiz data from API
+        async function fetchQuizData() {
+            try {
+                const response = await fetch('/api/quizzes/1');
+                const data = await response.json();
+                quizData = data.questions;
+                return true;
+            } catch (error) {
+                console.error('Error fetching quiz data:', error);
+                return false;
+            }
+        }
 
         // Start quiz
-        startQuizBtn.addEventListener('click', () => {
-            quizIntro.classList.remove('active');
-            quizQuestions.classList.add('active');
+        startQuizBtn.addEventListener('click', async () => {
+            // Show loading state
+            startQuizBtn.disabled = true;
+            startQuizBtn.textContent = 'Loading...';
+            
+            // Reset review data
+            userAnswers = [];
+            score = 0;
+            document.getElementById('review-btn-container').style.display = 'none';
+            
+            // Fetch quiz data
+            const success = await fetchQuizData();
+            
+            if (success) {
+                // Select 10 random questions
+                selectedQuestions = selectRandomQuestions(quizData);
+                
+                // Debug: log the number of selected questions
+                console.log('Total questions in database:', quizData.length);
+                console.log('Selected questions count:', selectedQuestions.length);
+                console.log('Selected questions:', selectedQuestions);
+                
+                // Prepare correct answers array
+                correctAnswers = selectedQuestions.map(q => q.correctAnswer);
+                
+                // Render questions
+                renderQuestions();
+                
+                // Show quiz questions
+                quizIntro.classList.remove('active');
+                quizQuestions.classList.add('active');
+                quizResults.classList.remove('active');
+                quizReview.classList.remove('active');
+            } else {
+                alert('Failed to load quiz. Please try again.');
+                startQuizBtn.disabled = false;
+                startQuizBtn.textContent = 'Start Quiz';
+            }
         });
 
         // Submit quiz
         submitQuizBtn.addEventListener('click', () => {
             // Get selected answers
-            const answers = [];
-            for (let i = 1; i <= 4; i++) {
+            userAnswers = [];
+            for (let i = 1; i <= selectedQuestions.length; i++) {
                 const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
-                answers.push(selectedOption ? parseInt(selectedOption.value) : -1);
+                userAnswers.push(selectedOption ? parseInt(selectedOption.value) : -1);
             }
 
             // Calculate score
-            let score = 0;
-            answers.forEach((answer, index) => {
+            score = 0;
+            userAnswers.forEach((answer, index) => {
                 if (answer === correctAnswers[index]) {
                     score++;
                 }
@@ -568,6 +670,9 @@
             // Display results
             scoreDisplay.textContent = score;
             scoreText.textContent = `You got ${score} out of ${correctAnswers.length} correct!`;
+            
+            // Show review button
+            document.getElementById('review-btn-container').style.display = 'flex';
             
             quizQuestions.classList.remove('active');
             quizResults.classList.add('active');
@@ -583,6 +688,60 @@
                 alert('Please enter a nickname to save your score.');
             }
         });
+
+        // Review quiz
+        reviewQuizBtn.addEventListener('click', () => {
+            quizResults.classList.remove('active');
+            quizReview.classList.add('active');
+            renderReview();
+        });
+
+        // Back to results
+        backToResultsBtn.addEventListener('click', () => {
+            quizReview.classList.remove('active');
+            quizResults.classList.add('active');
+        });
+
+        // Function to generate HTML for a review question
+        function generateReviewQuestionHTML(question, index, userAnswer) {
+            const isCorrect = userAnswer === question.correctAnswer;
+            const correctAnswerText = question.options[question.correctAnswer];
+            const userAnswerText = userAnswer >= 0 ? question.options[userAnswer] : 'No answer selected';
+            
+            let optionsHTML = '';
+            question.options.forEach((option, optionIndex) => {
+                let optionClass = 'option';
+                if (optionIndex === question.correctAnswer) {
+                    optionClass += ' correct-answer';
+                } else if (optionIndex === userAnswer && !isCorrect) {
+                    optionClass += ' incorrect-answer';
+                }
+                
+                optionsHTML += `
+                <label class="option ${optionClass}">
+                    <input type="radio" disabled ${optionIndex === userAnswer ? 'checked' : ''}>
+                    ${option}
+                    ${optionIndex === question.correctAnswer ? '<span class="answer-indicator correct">✓ Correct</span>' : ''}
+                    ${optionIndex === userAnswer && !isCorrect ? '<span class="answer-indicator incorrect">✗ Your answer</span>' : ''}
+                </label>`;
+            });
+
+            return `
+            <div class="question review-question ${isCorrect ? 'correct' : 'incorrect'}">
+                <div class="question-text">${index + 1}. ${question.question}</div>
+                <div class="options">
+                    ${optionsHTML}
+                </div>
+            </div>`;
+        }
+
+        // Function to render the review
+        function renderReview() {
+            reviewContainer.innerHTML = '';
+            selectedQuestions.forEach((question, index) => {
+                reviewContainer.innerHTML += generateReviewQuestionHTML(question, index, userAnswers[index]);
+            });
+        }
 
         document.getElementById('classify-link').addEventListener('click', function(e) {
             // Navigate to the classification page
