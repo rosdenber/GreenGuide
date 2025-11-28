@@ -259,11 +259,6 @@
             <p>Step-by-step instructions on how to dispose of common items properly</p>
         </div>
 
-        <div class="search-box">
-            <input type="text" id="search-input" placeholder="Search for disposal instructions...">
-            <button><i class="fas fa-search"></i></button>
-        </div>
-
         <div class="categories">
             <button class="category-btn active" data-category="household">Household Items</button>
             <button class="category-btn" data-category="electronics">Electronics</button>
@@ -298,7 +293,7 @@
                         <div class="disposal-steps">
                             <ol>
                                 <li>LED bulbs: Can be recycled at hardware stores</li>
-                                <li>Incandescent bulbs: Wrap in paper and dispose in general waste</li>
+                                <li>Incandescent bulbs: Wrap in paper and dispose in residual waste</li>
                                 <li>Fluorescent bulbs: Take to hazardous waste facilities</li>
                                 <li>Handle carefully to avoid breakage</li>
                             </ol>
@@ -369,7 +364,7 @@
                             <ol>
                                 <li>Do not pour down drains or on the ground</li>
                                 <li>Take to hazardous waste collection events</li>
-                                <li>Latex paint: Dry out and dispose in general waste</li>
+                                <li>Latex paint: Dry out and dispose in residual waste</li>
                                 <li>Oil-based paint: Always take to hazardous waste facilities</li>
                             </ol>
                         </div>
@@ -445,13 +440,6 @@
                 const category = button.getAttribute('data-category');
                 document.getElementById(category).classList.add('active');
             });
-        });
-
-        // Search functionality
-        document.getElementById('search-input').addEventListener('keyup', function(e) {
-            if (e.key === 'Enter') {
-                alert('Search functionality will be implemented with backend integration. For now, please browse the categories above.');
-            }
         });
 
         document.getElementById('classify-link').addEventListener('click', function(e) {

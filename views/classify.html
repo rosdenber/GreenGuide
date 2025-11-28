@@ -100,8 +100,14 @@
             border-radius: 10px;
             padding: 2rem;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center; /* Center content */
         }
-
+        
+        #classifyBtn, #classifyAgainBtn {
+            margin: 1.5rem auto 0;
+            display: block;
+        }
+        
         .result-section {
             flex: 1;
             min-width: 300px;
@@ -110,6 +116,7 @@
             padding: 2rem;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             display: none;
+            text-align: center; /* Center content */
         }
 
         .upload-area {
@@ -131,7 +138,14 @@
             color: #8bc34a;
             margin-bottom: 1rem;
         }
-
+        
+        /* Remove font size and margin from camera icon in button */
+        #cameraBtn i {
+            font-size: inherit;
+            margin-bottom: 0;
+            color: white; /* Make the camera icon white */
+        }
+        
         .upload-area p {
             margin-bottom: 1rem;
         }
@@ -289,7 +303,7 @@
                 
                 <!-- Camera capture section -->
                 <div id="cameraSection" style="margin-bottom: 1.5rem; display: none;">
-                    <video id="video" autoplay playsinline style="width: 100%; max-width: 100%; border-radius: 10px; margin-bottom: 1rem;"></video>
+                    <video id="video" autoplay playsinline style="width: 100%; max-width: 100%; border-radius: 10px; margin-bottom: 1rem; max-height: 500px;"></video>
                     <canvas id="canvas" style="display: none;"></canvas>
                     <button class="btn" id="captureBtn">Capture Photo</button>
                 </div>
@@ -309,6 +323,7 @@
                 </div>
                 
                 <button class="btn" id="classifyBtn" disabled>Classify Waste</button>
+                <button class="btn" id="classifyAgainBtn" style="display: none;">Classify Another Item</button>
             </div>
             
             <div class="result-section" id="resultSection">
@@ -329,8 +344,6 @@
                             <li>Check local guidelines for specific materials</li>
                         </ul>
                     </div>
-                    
-                    <button class="btn" id="classifyAgainBtn">Classify Another Item</button>
                 </div>
             </div>
         </div>
@@ -395,7 +408,7 @@
         });
 
         classifyBtn.addEventListener('click', classifyWaste);
-        classifyAgainBtn.addEventListener('click', resetClassification);
+        // Removed duplicate event listener for classifyAgainBtn as it's now handled in DOMContentLoaded
         
         // Camera event listeners
         captureBtn.addEventListener('click', capturePhoto);
@@ -635,7 +648,7 @@
                 default:
                     resultIcon.className += ' general';
                     resultInstructions.innerHTML = `
-                        <li>Place in designated general waste bin</li>
+                        <li>Place in designated residual waste bin</li>
                         <li>Ensure items are completely dry</li>
                         <li>Minimize waste by choosing reusable alternatives</li>
                         <li>Check if hazardous items have special disposal locations</li>
@@ -644,6 +657,10 @@
             
             // Show result section
             resultSection.style.display = 'block';
+            
+            // Show the "Classify Another Item" button and hide the "Classify Waste" button
+            classifyBtn.style.display = 'none';
+            classifyAgainBtn.style.display = 'block';
             
             // Scroll to results
             resultSection.scrollIntoView({ behavior: 'smooth' });
@@ -664,7 +681,7 @@
             // Reset captured image
             capturedImage = null;
             
-            // Reattach event listeners
+            // Reattach event listeners for newly created elements
             document.getElementById('browseBtn').addEventListener('click', () => {
                 document.getElementById('fileInput').click();
             });
@@ -680,10 +697,25 @@
             // Hide result section
             resultSection.style.display = 'none';
             
+            // Show the "Classify Waste" button and hide the "Classify Another Item" button
+            classifyBtn.style.display = 'block';
+            classifyAgainBtn.style.display = 'none';
+            
             // Reset file input
             fileInput.value = '';
             classifyBtn.disabled = true;
         }
+        
+        // Initialize button visibility
+        window.addEventListener('DOMContentLoaded', () => {
+            // Ensure initial visibility is correct
+            classifyBtn.style.display = 'block';
+            classifyAgainBtn.style.display = 'none';
+            
+            // Add event listener for the classify again button
+            classifyAgainBtn.addEventListener('click', resetClassification);
+        });
+
     </script>
 </body>
 </html>

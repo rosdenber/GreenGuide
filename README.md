@@ -5,7 +5,7 @@ GreenGuide is a web application designed to educate users on proper waste segreg
 ## Features
 
 ### 1. Waste Segregation Guides
-- Easy-to-understand instructions on identifying recyclable, biodegradable, and general waste
+- Easy-to-understand instructions on identifying biodegradable, non-biodegradable, recyclable, green waste, and hazardous waste
 - Visual guides with examples for better comprehension
 - Do's and Don'ts for each waste category
 
@@ -34,7 +34,7 @@ GreenGuide is a web application designed to educate users on proper waste segreg
 - **Frontend**: HTML, CSS, JavaScript
 - **Backend**: Node.js with Express.js
 - **Database**: MySQL
-- **Machine Learning Service**: Python with Flask/FastAPI
+- **Machine Learning Service**: Python with Flask
 - **Image Handling**: Multer for file uploads
 
 ## Project Structure

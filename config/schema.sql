@@ -9,7 +9,7 @@ CREATE TABLE guides (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
-    category ENUM('recyclable', 'biodegradable', 'general') NOT NULL,
+    category ENUM('recyclable', 'biodegradable', 'non-biodegradable', 'green-waste', 'hazardous') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -43,7 +43,9 @@ CREATE TABLE leaderboard (
 INSERT INTO guides (title, content, category) VALUES
 ('Recycling Guide', 'How to recycle properly: Rinse containers, remove caps, flatten cardboard boxes, and check local guidelines.', 'recyclable'),
 ('Composting Guide', 'How to compost organic waste: Balance greens and browns, chop materials, turn regularly, and keep moist.', 'biodegradable'),
-('General Waste Guide', 'What items go to general waste: Plastic wrap, used tissues, cigarette butts, broken ceramics, and disposable diapers.', 'general');
+('Non-Biodegradable Guide', 'Items that do not decompose naturally and require special disposal methods.', 'non-biodegradable'),
+('Green Waste Guide', 'Organic waste from gardens and parks like grass clippings, leaves, and tree prunings.', 'green-waste'),
+('Hazardous Waste Guide', 'Materials that can be harmful to human health or the environment and require special handling.', 'hazardous');
 
 -- Insert sample data for tips
 INSERT INTO tips (title, content) VALUES
@@ -71,12 +73,12 @@ INSERT INTO quizzes (title, questions) VALUES
     },
     {
         "question": "What is the best way to reduce plastic waste?",
-        "options": ["Recycle all plastic items", "Use reusable alternatives", "Throw in general waste", "Burn plastic items"],
+        "options": ["Recycle all plastic items", "Use reusable alternatives", "Dispose in residual waste", "Burn plastic items"],
         "correctAnswer": 1
     },
     {
         "question": "What should you do with old electronics like phones and computers?",
-        "options": ["Throw them in general waste", "Take them to an e-waste recycling center", "Put them in the recyclable bin", "Bury them in soil"],
+        "options": ["Dispose in residual waste", "Take them to an e-waste recycling center", "Put them in the recyclable bin", "Bury them in soil"],
         "correctAnswer": 1
     },
     {

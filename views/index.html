@@ -18,6 +18,12 @@
             color: #333;
             line-height: 1.6;
         }
+        
+        /* Remove underline from feature card links */
+        .feature-card {
+            text-decoration: none;
+            color: inherit;
+        }
 
         header {
             background-color: #2e7d32;
@@ -70,7 +76,7 @@
         }
 
         .hero {
-            background: linear-gradient(rgba(46, 125, 50, 0.8), rgba(46, 125, 50, 0.9)), url('https://images.unsplash.com/photo-1542601906-5a2fbf8c4f7e?ixlib=rb-4.0.3') no-repeat center center/cover;
+            background: url('https://www.wthfoods.ph/wp-content/uploads/2021/06/2.jpg') no-repeat center center/cover;
             height: 70vh;
             display: flex;
             flex-direction: column;
@@ -79,6 +85,23 @@
             text-align: center;
             color: white;
             padding: 1rem;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(46, 125, 50, 0.7);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
         }
 
         .hero h2 {
@@ -223,9 +246,11 @@
     </nav>
 
     <section class="hero">
-        <h2>Learn Waste Segregation the Smart Way</h2>
-        <p>GreenGuide helps you understand how to properly segregate waste, reduce your environmental footprint, and contribute to a sustainable future.</p>
-        <a href="/guide" class="btn">Get Started</a>
+        <div class="hero-content">
+            <h2>Learn Waste Segregation the Smart Way</h2>
+            <p>GreenGuide helps you understand how to properly segregate waste, reduce your environmental footprint, and contribute to a sustainable future.</p>
+            <a href="/guide" class="btn">Get Started</a>
+        </div>
     </section>
 
     <section class="features">
@@ -233,17 +258,17 @@
             <h2>Our Features</h2>
         </div>
         <div class="features-grid">
-            <div class="feature-card">
+            <a href="/guide" class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-book-open"></i>
                 </div>
                 <div class="feature-content">
                     <h3>Waste Segregation Guides</h3>
-                    <p>Easy-to-understand instructions on identifying recyclable, biodegradable, and general waste with visual examples.</p>
+                    <p>Easy-to-understand instructions on identifying biodegradable, non-biodegradable, recyclable, green waste, and hazardous waste with visual examples.</p>
                 </div>
-            </div>
+            </a>
             
-            <div class="feature-card">
+            <a href="/disposal" class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-recycle"></i>
                 </div>
@@ -251,9 +276,9 @@
                     <h3>Proper Disposal Instructions</h3>
                     <p>Step-by-step instructions on how to dispose of common items properly, categorized for easy browsing.</p>
                 </div>
-            </div>
+            </a>
             
-            <div class="feature-card">
+            <a href="/tips" class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-seedling"></i>
                 </div>
@@ -261,9 +286,9 @@
                     <h3>Eco-Friendly Tips</h3>
                     <p>Daily rotating tips on reusing materials, reducing trash, and living a more eco-friendly lifestyle.</p>
                 </div>
-            </div>
+            </a>
             
-            <div class="feature-card">
+            <a href="/quiz" class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-brain"></i>
                 </div>
@@ -271,9 +296,9 @@
                     <h3>Interactive Quizzes</h3>
                     <p>Test your knowledge with our fun quizzes and compete on the weekly leaderboard.</p>
                 </div>
-            </div>
+            </a>
             
-            <div class="feature-card">
+            <a href="/classify" class="feature-card">
                 <div class="feature-icon">
                     <i class="fas fa-robot"></i>
                 </div>
@@ -281,7 +306,7 @@
                     <h3>Trash Classification</h3>
                     <p>Upload an image of an item and our AI will classify it into the correct waste category.</p>
                 </div>
-            </div>
+            </a>
         </div>
     </section>
 

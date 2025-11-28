@@ -168,7 +168,7 @@
             font-size: 0.9rem;
         }
 
-        .daily-tip {
+        .featured-tip {
             background: linear-gradient(135deg, #2e7d32, #8bc34a);
             color: white;
             border-radius: 10px;
@@ -178,17 +178,17 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .daily-tip h3 {
+        .featured-tip h3 {
             font-size: 1.8rem;
             margin-bottom: 1rem;
         }
 
-        .daily-tip p {
+        .featured-tip p {
             font-size: 1.2rem;
             margin-bottom: 1.5rem;
         }
 
-        .daily-tip .tip-icon {
+        .featured-tip .tip-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
         }
@@ -245,14 +245,14 @@
     <div class="container">
         <div class="page-header">
             <h2>Eco-Friendly Tips</h2>
-            <p>Daily tips to help you reduce waste and live sustainably</p>
+            <p>Helpful tips to reduce waste and live sustainably</p>
         </div>
 
-        <div class="daily-tip">
+        <div class="featured-tip" data-category="compost">
             <div class="tip-icon">
                 <i class="fas fa-seedling"></i>
             </div>
-            <h3>Today's Eco Tip</h3>
+            <h3>Featured Eco Tip</h3>
             <p>Start a compost bin for your kitchen scraps! It reduces landfill waste and creates nutrient-rich soil for your garden.</p>
             <button class="filter-btn">Learn More</button>
         </div>
@@ -283,7 +283,6 @@
                 </div>
                 <div class="tip-meta">
                     <span><i class="fas fa-tag"></i> Reduce</span>
-                    <span><i class="far fa-calendar"></i> Nov 21, 2025</span>
                 </div>
             </div>
 
@@ -304,7 +303,6 @@
                 </div>
                 <div class="tip-meta">
                     <span><i class="fas fa-tag"></i> Reuse</span>
-                    <span><i class="far fa-calendar"></i> Nov 20, 2025</span>
                 </div>
             </div>
 
@@ -325,7 +323,6 @@
                 </div>
                 <div class="tip-meta">
                     <span><i class="fas fa-tag"></i> Recycle</span>
-                    <span><i class="far fa-calendar"></i> Nov 19, 2025</span>
                 </div>
             </div>
 
@@ -346,7 +343,6 @@
                 </div>
                 <div class="tip-meta">
                     <span><i class="fas fa-tag"></i> Compost</span>
-                    <span><i class="far fa-calendar"></i> Nov 18, 2025</span>
                 </div>
             </div>
 
@@ -367,7 +363,6 @@
                 </div>
                 <div class="tip-meta">
                     <span><i class="fas fa-tag"></i> Reduce</span>
-                    <span><i class="far fa-calendar"></i> Nov 17, 2025</span>
                 </div>
             </div>
 
@@ -388,7 +383,6 @@
                 </div>
                 <div class="tip-meta">
                     <span><i class="fas fa-tag"></i> Reuse</span>
-                    <span><i class="far fa-calendar"></i> Nov 16, 2025</span>
                 </div>
             </div>
         </div>
@@ -423,6 +417,21 @@
                     }
                 });
             });
+        });
+
+        // Add functionality to the "Learn More" button in the featured tip
+        document.querySelector('.featured-tip .filter-btn').addEventListener('click', function(e) {
+            // Filter to show only compost tips
+            const compostFilterButton = document.querySelector('.tip-filter .filter-btn[data-category="compost"]');
+            if (compostFilterButton) {
+                compostFilterButton.click();
+            }
+            
+            // Scroll smoothly to the tips container
+            const tipsContainer = document.querySelector('.tips-container');
+            if (tipsContainer) {
+                tipsContainer.scrollIntoView({ behavior: 'smooth' });
+            }
         });
 
         document.getElementById('classify-link').addEventListener('click', function(e) {

@@ -6,7 +6,7 @@ class Guide {
     this.id = id;
     this.title = title;
     this.content = content;
-    this.category = category; // recyclable, biodegradable, general
+    this.category = category; // recyclable, biodegradable, non-biodegradable, green-waste, hazardous
     this.createdAt = createdAt;
   }
 

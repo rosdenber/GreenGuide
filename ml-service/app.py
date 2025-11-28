@@ -25,7 +25,6 @@ app = Flask(__name__)
 # In a real implementation, you would load your actual trained model
 def load_model():
     # For demonstration purposes, we'll create a mock model
-    # In practice, you would load your trained TensorFlow/Keras model
     # model = tf.keras.models.load_model('path/to/your/model.h5')
     # return model
     return None
@@ -52,7 +51,7 @@ else:
 model = load_model()
 
 # Define waste categories
-CATEGORIES = ['biodegradable', 'recyclable', 'general']
+CATEGORIES = ['biodegradable', 'non-biodegradable', 'recyclable', 'green-waste', 'hazardous']
 
 def preprocess_image(image_path):
     """Preprocess the image for model prediction"""

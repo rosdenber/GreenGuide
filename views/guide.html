@@ -238,14 +238,118 @@
         </div>
 
         <div class="categories">
-            <button class="category-btn active" data-category="recyclable">Recyclable</button>
-            <button class="category-btn" data-category="biodegradable">Biodegradable</button>
-            <button class="category-btn" data-category="general">General Waste</button>
+            <button class="category-btn active" data-category="biodegradable">Biodegradable</button>
+            <button class="category-btn" data-category="non-biodegradable">Non-Biodegradable</button>
+            <button class="category-btn" data-category="recyclable">Recyclable</button>
+            <button class="category-btn" data-category="green-waste">Green Waste</button>
+            <button class="category-btn" data-category="hazardous">Hazardous Waste</button>
         </div>
 
         <div class="guide-content">
+            <!-- Biodegradable Waste Section -->
+            <div id="biodegradable" class="guide-section active">
+                <h3>Biodegradable Waste</h3>
+                <p>Biodegradable waste consists of organic materials from households that can decompose naturally and become compost.</p>
+                
+                <h4>Common Items:</h4>
+                <ul>
+                    <li>Food scraps (fruits, vegetables, bread)</li>
+                    <li>Coffee grounds and tea bags</li>
+                    <li>Eggshells and nutshells</li>
+                    <li>Used paper towels and napkins (unbleached)</li>
+                    <li>Wood chips and sawdust (untreated)</li>
+                </ul>
+
+                <div class="examples">
+                    <div class="example-card">
+                        <i class="fas fa-apple-alt"></i>
+                        <h4>Food Scraps</h4>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-mug-hot"></i>
+                        <h4>Coffee Grounds</h4>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-tissue"></i>
+                        <h4>Paper Towels</h4>
+                    </div>
+                </div>
+
+                <div class="do-dont">
+                    <div class="do">
+                        <h4><i class="fas fa-check-circle"></i> What to Do</h4>
+                        <ul>
+                            <li>Use a dedicated compost bin</li>
+                            <li>Chop larger items into smaller pieces</li>
+                            <li>Mix "greens" (food scraps) with "browns" (dry leaves)</li>
+                            <li>Turn the compost regularly for aeration</li>
+                        </ul>
+                    </div>
+                    <div class="dont">
+                        <h4><i class="fas fa-times-circle"></i> What Not to Do</h4>
+                        <ul>
+                            <li>Don't include meat or dairy products</li>
+                            <li>Don't add pet waste or diapers</li>
+                            <li>Don't include diseased plants</li>
+                            <li>Don't add oils or fats</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Non-Biodegradable Waste Section -->
+            <div id="non-biodegradable" class="guide-section">
+                <h3>Non-Biodegradable Waste</h3>
+                <p>Non-biodegradable waste consists of materials that do not decompose naturally and persist in the environment for long periods.</p>
+                
+                <h4>Common Items:</h4>
+                <ul>
+                    <li>Ceramics and porcelain</li>
+                    <li>Rubber products (tires, gloves)</li>
+                    <li>Composite materials (mixed plastics)</li>
+                    <li>Tetra Pak containers</li>
+                    <li>Polystyrene (Styrofoam)</li>
+                </ul>
+
+                <div class="examples">
+                    <div class="example-card">
+                        <i class="fas fa-mug-hot"></i>
+                        <h4>Ceramics</h4>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-ring"></i>
+                        <h4>Rubber Products</h4>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-box"></i>
+                        <h4>Composite Packaging</h4>
+                    </div>
+                </div>
+
+                <div class="do-dont">
+                    <div class="do">
+                        <h4><i class="fas fa-check-circle"></i> What to Do</h4>
+                        <ul>
+                            <li>Check if specialized recycling programs exist</li>
+                            <li>Dispose at designated collection points</li>
+                            <li>Consider reusing items when possible</li>
+                            <li>Follow local waste management guidelines</li>
+                        </ul>
+                    </div>
+                    <div class="dont">
+                        <h4><i class="fas fa-times-circle"></i> What Not to Do</h4>
+                        <ul>
+                            <li>Don't throw in regular trash bins without checking</li>
+                            <li>Don't burn these materials</li>
+                            <li>Don't mix with recyclable materials</li>
+                            <li>Don't dispose of in nature</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <!-- Recyclable Waste Section -->
-            <div id="recyclable" class="guide-section active">
+            <div id="recyclable" class="guide-section">
                 <h3>Recyclable Waste</h3>
                 <p>Recyclable waste consists of materials that can be processed and reused to make new products.</p>
                 
@@ -295,32 +399,32 @@
                 </div>
             </div>
 
-            <!-- Biodegradable Waste Section -->
-            <div id="biodegradable" class="guide-section">
-                <h3>Biodegradable Waste</h3>
-                <p>Biodegradable waste consists of organic materials that can decompose naturally and become compost.</p>
+            <!-- Green Waste Section -->
+            <div id="green-waste" class="guide-section">
+                <h3>Green Waste</h3>
+                <p>Green waste consists of organic materials from gardens and parks that can be composted or mulched.</p>
                 
                 <h4>Common Items:</h4>
                 <ul>
-                    <li>Food scraps (fruits, vegetables, bread)</li>
-                    <li>Coffee grounds and tea bags</li>
-                    <li>Eggshells and nutshells</li>
-                    <li>Garden waste (leaves, grass clippings)</li>
-                    <li>Paper towels and napkins (unbleached)</li>
+                    <li>Grass clippings</li>
+                    <li>Leaves and tree prunings</li>
+                    <li>Weeds and plant trimmings</li>
+                    <li>Small branches (under 10cm diameter)</li>
+                    <li>Flowers and plants</li>
                 </ul>
 
                 <div class="examples">
                     <div class="example-card">
-                        <i class="fas fa-apple-alt"></i>
-                        <h4>Fruit Scraps</h4>
-                    </div>
-                    <div class="example-card">
                         <i class="fas fa-leaf"></i>
-                        <h4>Garden Waste</h4>
+                        <h4>Leaves</h4>
                     </div>
                     <div class="example-card">
-                        <i class="fas fa-mug-hot"></i>
-                        <h4>Coffee Grounds</h4>
+                        <i class="fas fa-seedling"></i>
+                        <h4>Grass Clippings</h4>
+                    </div>
+                    <div class="example-card">
+                        <i class="fas fa-tree"></i>
+                        <h4>Tree Prunings</h4>
                     </div>
                 </div>
 
@@ -328,50 +432,50 @@
                     <div class="do">
                         <h4><i class="fas fa-check-circle"></i> What to Do</h4>
                         <ul>
-                            <li>Use a dedicated compost bin</li>
-                            <li>Chop larger items into smaller pieces</li>
-                            <li>Mix "greens" (food scraps) with "browns" (dry leaves)</li>
-                            <li>Turn the compost regularly for aeration</li>
+                            <li>Compost in a dedicated bin or pile</li>
+                            <li>Use as mulch around plants</li>
+                            <li>Dry leaves before composting</li>
+                            <li>Chop larger materials into smaller pieces</li>
                         </ul>
                     </div>
                     <div class="dont">
                         <h4><i class="fas fa-times-circle"></i> What Not to Do</h4>
                         <ul>
-                            <li>Don't include meat or dairy products</li>
-                            <li>Don't add pet waste or diapers</li>
                             <li>Don't include diseased plants</li>
-                            <li>Don't add oils or fats</li>
+                            <li>Don't add weeds with seeds</li>
+                            <li>Don't include pet waste</li>
+                            <li>Don't compost treated wood or plants</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- General Waste Section -->
-            <div id="general" class="guide-section">
-                <h3>General Waste</h3>
-                <p>General waste consists of materials that cannot be recycled or composted and must go to landfill.</p>
+            <!-- Hazardous Waste Section -->
+            <div id="hazardous" class="guide-section">
+                <h3>Hazardous Waste</h3>
+                <p>Hazardous waste consists of materials that can be harmful to human health or the environment and require special handling.</p>
                 
                 <h4>Common Items:</h4>
                 <ul>
-                    <li>Plastic wrap and Styrofoam</li>
-                    <li>Used tissues and paper towels</li>
-                    <li>Cigarette butts</li>
-                    <li>Broken ceramics and light bulbs</li>
-                    <li>Disposable diapers</li>
+                    <li>Batteries (especially rechargeable and button batteries)</li>
+                    <li>Paints, solvents, and chemicals</li>
+                    <li>Motor oil and automotive fluids</li>
+                    <li>Fluorescent light bulbs and LEDs</li>
+                    <li>Electronic waste (phones, computers, etc.)</li>
                 </ul>
 
                 <div class="examples">
                     <div class="example-card">
-                        <i class="fas fa-plastic"></i>
-                        <h4>Plastic Wrap</h4>
+                        <i class="fas fa-car-battery"></i>
+                        <h4>Batteries</h4>
                     </div>
                     <div class="example-card">
-                        <i class="fas fa-tissue"></i>
-                        <h4>Used Tissues</h4>
+                        <i class="fas fa-paint-roller"></i>
+                        <h4>Paint & Solvents</h4>
                     </div>
                     <div class="example-card">
-                        <i class="fas fa-lightbulb"></i>
-                        <h4>Light Bulbs</h4>
+                        <i class="fas fa-laptop"></i>
+                        <h4>Electronics</h4>
                     </div>
                 </div>
 
@@ -379,19 +483,19 @@
                     <div class="do">
                         <h4><i class="fas fa-check-circle"></i> What to Do</h4>
                         <ul>
-                            <li>Ensure items are completely dry</li>
-                            <li>Place in designated general waste bin</li>
-                            <li>Minimize waste by choosing reusable alternatives</li>
-                            <li>Check if hazardous items have special disposal locations</li>
+                            <li>Take to designated hazardous waste collection centers</li>
+                            <li>Store in original containers with labels intact</li>
+                            <li>Keep away from children and pets</li>
+                            <li>Participate in community collection events</li>
                         </ul>
                     </div>
                     <div class="dont">
                         <h4><i class="fas fa-times-circle"></i> What Not to Do</h4>
                         <ul>
-                            <li>Don't burn waste in open areas</li>
-                            <li>Don't mix with recyclables or compost</li>
-                            <li>Don't include electronic waste</li>
-                            <li>Don't dispose of hazardous materials here</li>
+                            <li>Don't throw in regular trash or recycling bins</li>
+                            <li>Don't mix different chemicals together</li>
+                            <li>Don't pour down drains or on the ground</li>
+                            <li>Don't store for extended periods without proper containment</li>
                         </ul>
                     </div>
                 </div>
